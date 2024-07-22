@@ -16,12 +16,12 @@ const MyProfile = () => {
         const fetchPosts = async () => {
             const response = await fetch(`/api/users/${session?.user.id}/posts`)
             const data = await response.json()
-            
+
             setPosts(data)
         }
 
-        if(session?.user.id) fetchPosts()
-    }, [])
+        if (session?.user.id) fetchPosts()
+    }, [session?.user.id])
 
 
     const handleEdit = (post) => {
@@ -31,13 +31,13 @@ const MyProfile = () => {
     const handleDelete = async (post) => {
         const hasConfirmed = confirm("Are you sure you want to delete this prompt?")
 
-        if(hasConfirmed) {
+        if (hasConfirmed) {
             try {
                 const response = await fetch(`/api/prompt/${post._id.toString()}`, {
                     method: 'DELETE'
                 })
 
-                if(response.ok) {
+                if (response.ok) {
                     setPosts(posts.filter(p => p._id !== post._id))
                 }
             } catch (error) {
@@ -49,7 +49,7 @@ const MyProfile = () => {
     return (
         <Profile
             name="My"
-            desc="Welcome to your personalized profile page"
+            desc="Welcome to your personalized profile page. Here you can view all your prompts"
             data={posts}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
